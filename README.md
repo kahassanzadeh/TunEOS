@@ -26,7 +26,6 @@ TunEOS/
 ├── preprocess_conf.py  # Parse configs to extract tunable parameters
 ├── tuning.py           # Launch Optuna studies and submit Slurm jobs
 ├── requirements.txt    # Python dependency list
-└── .DS_Store           # macOS metadata (can be safely ignored)
 ```
 
 ## 🔧 Prerequisites
@@ -111,18 +110,11 @@ The script will:
 * **Slurm**: Ensure `sacct`, `scancel`, and `sbatch` are in your `PATH`.
 * **W\&B**: Set `entity` and `project` fields in your config for proper logging.
 * **Resource Cleanup**: Remove stale `opt_<Model>/*` directories between runs if needed.
-* **License**: No license file is provided; you may add one (e.g., MIT) as appropriate.
 
 ## 🤝 Contributing
 
 1. Fork the repo and create a new branch.
 2. Make your changes (e.g., add new model support, improve CLI).
 3. Submit a pull request with a clear description and tests.
-
-## 📄 License
-
-*No license specified. Please add a `LICENSE` file to clarify usage rights.*
-
----
 
 *Happy tuning!*
