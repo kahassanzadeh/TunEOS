@@ -1,0 +1,84 @@
+## == names == ##
+work_dir: '.'
+name: "W"
+model_dir: "models"
+log_dir: "models"
+checkpoints_dir: "models"
+results_dir: "models"
+## == model == ##
+model: "MACE"
+E0s: "{74: -2052.02}"
+r_max: 6.
+max_ell: 3
+
+# radial_MLP: '[64, 64, 64]'
+num_radial_basis: 6
+num_cutoff_basis: 4
+distance_transform: 'None'
+
+pair_repulsion: True
+
+# hidden_irreps: '256x0e + 256x1o' # or num_channels: 256 max_L: 1
+num_channels: optuna(8, 16, 32, 48, 64, 96, 128, 256, 512)
+max_L: optuna(1, 2, 3, 4, 5)
+correlation: 3
+num_interactions: optuna(2, 3, 4)
+gate: 'silu'
+
+# MLP_irreps: '16x0e'
+
+## == data == ##
+train_file: "/home/hassanza/final_test/TunEOS/opt_Mace/processed_data/filtered_structures/train"
+valid_file: "/home/hassanza/final_test/TunEOS/opt_Mace/processed_data/filtered_structures/val"
+statistics_file: "/home/hassanza/final_test/TunEOS/opt_Mace/processed_data/filtered_structures/statistics.json"
+
+## == training == ##
+device: cuda
+distributed: True
+num_workers: 2
+
+compute_forces: True
+compute_stress: True
+
+energy_weight: 0.333333
+forces_weight: 0.333333
+stress_weight: 0.333334
+scaling: 'std_scaling' # std_scaling rms_forces_scaling no_scaling
+loss: 'stress'
+
+batch_size: 16
+valid_batch_size: 8
+max_num_epochs: 1000
+swa: True
+start_swa: 10
+swa_energy_weight: 0.333333
+swa_forces_weight: 0.333333
+swa_stress_weight: 0.333334
+ema: True
+ema_decay: 0.99
+amsgrad: True
+beta: 0.9
+lr: optuna(0.0005, 0.001, 0.005, 0.01)
+lr_factor: 0.6
+lr_scheduler_gamma: 0.9993
+scheduler: 'ReduceLROnPlateau'
+scheduler_patience: 50
+
+eval_interval: 1
+patience: 200
+
+
+restart_latest: True
+error_table: 'PerAtomRMSEstressvirials'
+default_dtype: "float64"
+save_cpu: False
+enable_cueq: False
+
+## == wandb == ##
+wandb: True
+wandb_dir: 'wandb'
+wandb_project: 'final_mace_test'
+wandb_name: 'test_run'
+
+## == seed == ##
+seed: 12345
