@@ -1,6 +1,6 @@
 # TunEOS
 <p align="center">
-  <img src="logo.png" width="220" alt="TunEOS logo">
+  <img src="logo.png" width="500" alt="TunEOS logo">
 </p>
 
 **TunEOS** is a hyperparameter optimization and automation toolkit for modern equivariant graph neural network models in computational materials science. It streamlines the process of tuning and training three state-of-the-art models—**NequIP**, **MACE**, and **Allegro**—by integrating:
