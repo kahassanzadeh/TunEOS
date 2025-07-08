@@ -15,13 +15,13 @@
 ```
 TunEOS/
 ├── opt_Allegro/        # Allegro model configs & Slurm template
-│   ├── config.yaml     # Default Allegro config with optuna(...) entries
+│   ├── config.yaml     # Default Allegro config with Tuneos(...) entries
 │   └── job.sh          # Slurm submission script template
 ├── opt_Mace/           # MACE model configs & Slurm template
-│   ├── config.yaml     # Default MACE config with optuna(...) entries
+│   ├── config.yaml     # Default MACE config with Tuneos(...) entries
 │   └── job.sh          # Slurm submission script template
 ├── opt_Nequip/         # NequIP model configs & Slurm template
-│   ├── config.yaml     # Default NequIP config with optuna(...) entries
+│   ├── config.yaml     # Default NequIP config with Tuneos(...) entries
 │   └── job.sh          # Slurm submission script template
 ├── preprocess_conf.py  # Parse configs to extract tunable parameters
 ├── tuning.py           # Launch Optuna studies and submit Slurm jobs
@@ -66,7 +66,7 @@ TunEOS/
 1. In each `opt_<Model>/config.yaml`, set the:
 
    * **data paths** (e.g., `split_dataset.file_path`, `train`, `val`, `test`).
-   * **model parameters** (e.g., `num_channels`, `l_max`)—use `optuna(...)` to mark tunable fields.
+   * **model parameters** (e.g., `num_channels`, `l_max`)—use `Tuneos(...)` to mark tunable fields.
    * **training settings** (e.g., `batch_size`, `max_epochs`, `trainer`).
 2. Customize `job.sh` for your Slurm environment (modules, paths, partitions).
 3. In `tuning.py`, update the `storage` URL to point to your PostgreSQL instance.
@@ -79,7 +79,7 @@ Run:
 python preprocess_conf.py
 ```
 
-This will print all parameters marked with `optuna(...)` in each `opt_<Model>/config.yaml` and their candidate values.
+This will print all parameters marked with `Tuneos(...)` in each `opt_<Model>/config.yaml` and their candidate values.
 
 ## 🎯 Running Hyperparameter Tuning
 
