@@ -6,7 +6,7 @@ import os
 
 def extract_optuna_args(optuna_str):
     """
-    Given a string like "optuna(0.001, 0.01, [0.1, 0.2])",
+    Given a string like "Tuneos(0.001, 0.01, [0.1, 0.2])",
     parse it with AST and return a list of literal values.
     """
     fake_src = f"_param = {optuna_str.strip()}"
@@ -26,7 +26,7 @@ def extract_optuna_args(optuna_str):
 
 def find_optuna_params(cfg, prefix=""):
     """
-    Recursively traverse cfg (dicts/lists) and find any string values starting with optuna(...).
+    Recursively traverse cfg (dicts/lists) and find any string values starting with Tuneos(...).
     Returns a dict mapping each config path (dot/list-index notation) to its candidate values.
     """
     tuned = {}
@@ -39,7 +39,7 @@ def find_optuna_params(cfg, prefix=""):
         for idx, val in enumerate(cfg):
             path = f"{prefix}[{idx}]"
             tuned.update(find_optuna_params(val, path))
-    elif isinstance(cfg, str) and cfg.strip().lower().startswith("optuna("):
+    elif isinstance(cfg, str) and cfg.strip().lower().startswith("Tuneos("):
         try:
             values = extract_optuna_args(cfg)
             tuned[prefix] = values

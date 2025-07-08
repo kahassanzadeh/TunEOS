@@ -234,7 +234,7 @@ training_module:
   # any torch compatible optimizer: https://pytorch.org/docs/stable/optim.html#algorithms
   optimizer:
     _target_: torch.optim.Adam
-    lr: optuna(0.001, 0.01, 0.05)
+    lr: Tuneos(0.001, 0.01, 0.05)
 
   # see options for lr_scheduler_config
   # https://lightning.ai/docs/pytorch/stable/api/lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule.configure_optimizers

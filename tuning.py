@@ -127,7 +127,7 @@ def objective(trial: optuna.Trial, path_conf: str, model: str, dict_of_params: d
         
         
         flag_time = False
-        timeout_secs = 10 * 3600   
+        timeout_secs = 15 * 3600   
         start = time.time()  
         while True:
             if flag == False:
@@ -198,5 +198,5 @@ def tuning(model: str, study_name: str):
 
 
 if __name__ == "__main__":
-    tuning('Mace', study_name='final_mace_test')
+    tuning('Mace', study_name='mace_the_last_1')
 

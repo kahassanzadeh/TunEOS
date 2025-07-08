@@ -7,7 +7,7 @@ model_type_names: ${chemical_symbols}
 data:
   _target_: nequip.data.datamodule.ASEDataModule
   split_dataset:
-    file_path: /home/hassanza/final_test/TunEOS/opt_Nequip/filtered_structures.xyz
+    file_path: /home/hassanza/final_test/TunEOS/opt_Allegro/filtered_structures.xyz
     train: 0.85
     val: 0.1
     test: 0.05
@@ -37,7 +37,7 @@ trainer:
 
   logger:
     _target_: lightning.pytorch.loggers.wandb.WandbLogger
-    project: allegro_final_new
+    project: allegro_final_with_newcode
     name: W229HeH_rmin0.5_rmax6_256-128-0-0-2
     save_dir: ./output
     reinit: true
@@ -56,7 +56,7 @@ trainer:
 
 # NOTE:
 # interpolation parameters for opt_Allegro model
-num_scalar_features: 64
+num_scalar_features: Tuneos(8, 16, 32, 64, 128, 256, 512)
 
 
 training_module:
@@ -75,7 +75,7 @@ training_module:
   test_metrics: ${training_module.val_metrics}
   optimizer:
     _target_: torch.optim.Adam
-    lr: optuna(0.0001, 0.01)  # learning rate to be tuned by Optuna
+    lr: Tuneos(0.0001, 0.0005, 0.001, 0.005, 0.01)  # learning rate to be tuned by Optuna
   # ^ IMPORTANT: opt_Allegro models do better with learning rates around 1e-3
 
   # to use the opt_Allegro model in the NequIP framework, the following `model` block has to be changed to be that of opt_Allegro's
@@ -108,10 +108,10 @@ training_module:
     # The following hyperparameters are the main ones that one should focus on tuning.
 
     # maximum order l to use in spherical harmonics embedding, 1 is baseline (fast), 2 is more accurate, but slower, 3 highly accurate but slow
-    l_max: 1
+    l_max: Tuneos(1, 2, 3, 4, 5)
 
     # number of tensor product layers, 1-3 usually best, more is more accurate but slower
-    num_layers: 2
+    num_layers: Tuneos(1, 2, 3, 4, 5)
 
     # number of scalar features, more is more accurate but slower
     # 16, 32, 64, 128, 256 are good options to try depending on the dataset
@@ -119,7 +119,7 @@ training_module:
 
     # number of tensor features, more is more accurate but slower
     # 8, 16, 32, 64 are good options to try depending on the dataset
-    num_tensor_features: 32
+    num_tensor_features: Tuneos(8, 16, 32, 64, 128, 256, 512)
 
     # == allegro MLPs ==
     # neural network parameters in the opt_Allegro layers
